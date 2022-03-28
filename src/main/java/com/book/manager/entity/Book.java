@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.mongodb.lang.Nullable;
+
 import lombok.Data;
 
 @Data
@@ -15,7 +17,10 @@ public class Book {
 	@Indexed(unique = true)
 	private String bookName;
 	private String authorName;
+	@Nullable
+	private String country;
+	private String language;
 	private int noOfPages;
-	private int noOfChapters;
+	private int year;
 
 }
