@@ -30,7 +30,7 @@ public class BookController {
 
 	@Autowired
 	MongoTemplate mongoTemplate;
-	
+
 	static String response = "";
 
 	@PostMapping("/add")
@@ -89,7 +89,7 @@ public class BookController {
 
 		return new ResponseEntity<>(basedOnBookName, new HttpHeaders(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/sort/author")
 	private ResponseEntity<Object> sortingCollectionByAuthorName() {
 		Query query = new Query();
@@ -99,7 +99,7 @@ public class BookController {
 
 		return new ResponseEntity<>(basedOnAuthorsName, new HttpHeaders(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/sort/year")
 	private ResponseEntity<Object> sortingCollectionByYear() {
 		Query query = new Query();
@@ -108,5 +108,14 @@ public class BookController {
 		List<Book> publishedByYear = mongoTemplate.find(query, Book.class);
 
 		return new ResponseEntity<>(publishedByYear, new HttpHeaders(), HttpStatus.OK);
+	}
+
+	@GetMapping("/getbyauthor/{authorName}")
+	private ResponseEntity<Object> getBooksByAuthors(@PathVariable String authorName) {
+
+		List<Book> authorsBooks = bookRepository.findBookNameByAuthorName(authorName);
+		List<String> bookNames = authorsBooks.stream().filter(a -> a.getAuthorName().equals(authorName))
+				.map(Book::getBookName).toList();
+		return new ResponseEntity<>(bookNames, new HttpHeaders(), HttpStatus.OK);
 	}
 }
