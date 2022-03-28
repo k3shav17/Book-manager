@@ -1,5 +1,6 @@
 package com.book.manager.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -12,6 +13,9 @@ public interface BookRepository extends MongoRepository<Book, String> {
 	Optional<Book> findBookById(String id);
 	
 	@Query(value = "{'bookName': {$regex : ?0, $options: 'i'}}")
-	Optional<Book> findBookByName(String bookName);	
+	Optional<Book> findBookByName(String bookName);
+
+	@Query(value = "{'authorName': {$regex : ?0, $options: 'i'}}")
+	List<Book> findBookNameByAuthorName(String authorName);	
 	
 }
