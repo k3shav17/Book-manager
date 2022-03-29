@@ -22,5 +22,9 @@ public class Book {
 	private String language;
 	private int noOfPages;
 	private int year;
+	private Status status;
+//	private int pagesCompleted;
+	
+	// todo : if started how pages have you completed, so no of pages done.
 
 }
