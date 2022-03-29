@@ -179,6 +179,12 @@ public class BookController {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("bookName").is(book.getBookName()));
 		Update update = new Update();
+		update.set("bookName", book.getBookName());
+		update.set("authorName", book.getAuthorName());
+		update.set("country", book.getCountry());
+		update.set("language", book.getLanguage());
+		update.set("noOfPages", book.getNoOfPages());
+		update.set("year", book.getYear());
 		update.set("status", book.getStatus());
 		mongoTemplate.findAndModify(query, update, FindAndModifyOptions.options().upsert(true).returnNew(false),
 				Book.class);
