@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -179,7 +180,8 @@ public class BookController {
 		query.addCriteria(Criteria.where("bookName").is(book.getBookName()));
 		Update update = new Update();
 		update.set("status", book.getStatus());
-		mongoTemplate.findAndModify(query, update, Book.class);
+		mongoTemplate.findAndModify(query, update, FindAndModifyOptions.options().upsert(true).returnNew(false),
+				Book.class);
 		return new ResponseEntity<>("Book details has been updated. ", new HttpHeaders(), HttpStatus.OK);
 	}
 }
